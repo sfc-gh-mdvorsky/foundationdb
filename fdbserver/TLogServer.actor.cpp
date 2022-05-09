@@ -1786,7 +1786,7 @@ Future<Void> tLogPeekMessages(PromiseType replyPromise,
 
 	if (SERVER_KNOBS->ENABLE_VERSION_VECTOR && poppedVer <= reqBegin &&
 	    reqBegin > logData->persistentDataDurableVersion && !reqOnlySpilled && reqTag.locality >= 0 &&
-	    !reqReturnIfBlocked) {
+	    !reqReturnIfBlocked && !logData->getTagData(reqTag)->unpoppedRecovered) {
 		state double startTime = now();
 		// TODO (version vector) check if this should be included in "status details" json
 		// TODO (version vector) all tags may be too many, instead,  standard deviation?
