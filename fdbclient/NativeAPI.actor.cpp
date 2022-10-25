@@ -8401,7 +8401,7 @@ Reference<TransactionLogInfo> Transaction::createTrLogInfoProbabilistically(cons
 
 void Transaction::setTransactionID(UID id) {
 	ASSERT(getSize() == 0);
-	trState->spanContext = SpanContext(id, trState->spanContext.spanID);
+	trState->spanContext = SpanContext(id, trState->spanContext.spanID, TraceFlags::sampled);
 }
 
 void Transaction::setToken(uint64_t token) {
