@@ -467,6 +467,14 @@ Span& Span::operator=(Span&& o) {
 Span::~Span() {
 	if (begin > 0.0 && context.isSampled()) {
 		end = g_network->now();
+		if (!links.empty()) {
+			addAttribute("batchID"_sr, context.traceID.toString());
+			for (const auto& link : links) {
+				Span fake(Location{location.name.withSuffix("-dummy"_sr)}, link);
+				fake.begin = begin;
+				fake.addAttribute("batchID"_sr, context.traceID.toString());
+			}
+		}
 		g_tracer->trace(*this);
 	}
 }
