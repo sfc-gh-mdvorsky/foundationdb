@@ -470,7 +470,8 @@ Span::~Span() {
 		if (!links.empty()) {
 			addAttribute("batchID"_sr, context.traceID.toString());
 			for (const auto& link : links) {
-				Span fake(Location{location.name.withSuffix("-dummy"_sr)}, link);
+				auto dummyLoc = location.name.withSuffix("-dummy"_sr);
+				Span fake(Location{dummyLoc}, link);
 				fake.begin = begin;
 				fake.addAttribute("batchID"_sr, context.traceID.toString());
 			}

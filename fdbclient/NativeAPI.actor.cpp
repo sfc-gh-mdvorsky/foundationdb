@@ -3302,7 +3302,6 @@ ACTOR Future<Optional<Value>> getValue(Reference<TransactionState> trState,
 		span.addAttribute("tenant"_sr, trState->tenant().get());
 	}
 
-	span.addAttribute("key"_sr, key);
 	trState->cx->validateVersion(ver);
 
 	loop {
